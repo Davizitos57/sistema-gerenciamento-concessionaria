@@ -13,4 +13,18 @@ typedef struct {
     
 } TCliente;
 
+//Declarações de Funções
+int tamanho_cliente();
+int tamanho_arquivo_clientes(FILE *out);
+
+TCliente *leitura_arquivo_cliente(FILE *in);
+TCliente *criaCliente(char *nome, char *cpf, char *telefone, char *endereco, int codigo);
+TCliente *criaClienteManual (TCliente *cliente, FILE *out);
+
+void criarBaseOrdenadaCliente(FILE *out, int tamanho);
+void criarBaseEmbaralhadaCliente(FILE *out, int tamanho);
+void salvarCliente(TCliente *cliente, FILE *out);
+void imprimecliente(TCliente *c);
+void imprimirBaseClientes (FILE *out);
+
 #endif
