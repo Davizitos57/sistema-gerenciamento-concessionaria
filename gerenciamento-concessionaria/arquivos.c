@@ -47,3 +47,77 @@ void embralhabases(int *vet, int TAM) {
         vet[i] = tmp;
     }
 }
+
+//Função para criar todas as bases ao mesmo tempo e no mesmo estilo "ordenado"
+void criarBasesOrdenadasGeral (FILE *automoveis, FILE *clientes, FILE *funcionarios, int tamanho){
+
+    int tamanhocliente = tamanho/2;
+    int tamanhofunc = tamanho/5;
+
+    criarBaseOrdenadaCarros(automoveis, tamanho);
+    criarBaseOrdenadaFuncionario(funcionarios, tamanhofunc);
+    criarBaseOrdenadaCliente(clientes, tamanhocliente);
+
+    srand(time(NULL));
+    for(int i = 0; i < tamanho; i++){
+        int autoaletorio = rand() % tamanho;
+        fseek(automoveis, autoaletorio *sizeof(TCarros), SEEK_SET);
+        TCarros *carro = leitura_arquivo_carros(automoveis);
+
+        int clientealeatorio = rand() % tamanhocliente;
+        fseek(clientes, clientealeatorio*sizeof(TCliente), SEEK_SET);
+        TCliente *cliente = leitura_arquivo_cliente(clientes);
+
+        int funcaleatorio = rand() % tamanhofunc;
+        fseek(funcionarios, funcaleatorio *sizeof(TFuncionario), SEEK_SET);
+        TFuncionario *funcionario = leitura_arquivo_funcionario(funcionarios);
+
+        carro->cliente = *cliente;
+        carro->funcionario = *funcionario;
+        carro->situacao = (rand() % 2 == 0) ? ALUGADO : VENDIDO;
+
+        fseek(automoveis, autoaletorio *sizeof(TCarros), SEEK_SET);
+        salvarAutomoveis(carro, automoveis);
+
+        free(carro);
+        free(cliente);
+        free(funcionario);
+    }
+}
+
+//Função para criar todas bases ao mesmo tempo e no mesmo estilo "embaralhado"
+void criarBasesEmbaralhadasGeral (FILE *automoveis, FILE *clientes, FILE *funcionarios, int tamanho){
+
+    int tamanhocliente = tamanho/2;
+    int tamanhofunc = tamanho/5;
+
+    criarBaseEmbaralhadaCarros(automoveis, tamanho);
+    criarBaseEmbaralhadaFuncionario(funcionarios, tamanhofunc);
+    criarBaseEmbaralhadaCliente(clientes, tamanhocliente);
+
+    srand(time(NULL));
+    for(int i = 0; i < tamanho; i++){
+        int autoaletorio = rand() % tamanho;
+        fseek(automoveis, autoaletorio *sizeof(TCarros), SEEK_SET);
+        TCarros *carro = leitura_arquivo_carros(automoveis);
+        
+        int clientealeatorio = rand() % tamanhocliente;
+        fseek(clientes, clientealeatorio*sizeof(TCliente), SEEK_SET);
+        TCliente *cliente = leitura_arquivo_cliente(clientes);
+
+        int funcaleatorio = rand() % tamanhofunc;
+        fseek(funcionarios, funcaleatorio *sizeof(TFuncionario), SEEK_SET);
+        TFuncionario *funcionario = leitura_arquivo_funcionario(funcionarios);
+
+        carro->cliente = *cliente;
+        carro->funcionario = *funcionario;
+        carro->situacao = (rand() % 2 == 0) ? ALUGADO : VENDIDO;
+
+        fseek(automoveis, autoaletorio *sizeof(TCarros), SEEK_SET);
+        salvarAutomoveis(carro, automoveis);
+
+        free(carro);
+        free(cliente);
+        free(funcionario);
+    }
+}
