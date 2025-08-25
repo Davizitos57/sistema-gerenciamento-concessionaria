@@ -121,3 +121,37 @@ void criarBasesEmbaralhadasGeral (FILE *automoveis, FILE *clientes, FILE *funcio
         free(funcionario);
     }
 }
+
+//Salva o tempo e quantidade de iterações em um arquivo LOG.txt
+void Salvar_LOG_B(FILE *LOG, int contador, double TEMP_EXECUCAO){
+    LOG = fopen("ArquivoLOG.txt", "a");
+    
+    if(LOG == NULL){
+        printf("Nao foi possivel abrir o arquivo");
+        return;
+    }
+
+    fprintf(LOG, "\n---------- BUSCA BINARIA ----------\n");
+    fprintf(LOG, "Número de comparações: %d\n", contador);
+    fprintf(LOG, "Tempo de execução da busca: %f\n", TEMP_EXECUCAO);
+
+
+    fclose(LOG);
+}
+
+//Salva o tempo e quantidade de iterações em um arquivo LOG.txt
+void Salvar_LOG_S(FILE *LOG, int contador, double TEMP_EXECUCAO){
+    LOG = fopen("ArquivoLOG.txt", "a");
+    
+    if(LOG == NULL){
+        printf("Nao foi possivel abrir o arquivo");
+        return;
+    }
+
+    fprintf(LOG, "\n---------- BUSCA SEQUENCIAL ----------\n");
+    fprintf(LOG, "Número de comparações: %d\n", contador);
+    fprintf(LOG, "Tempo de execução da busca: %f\n", TEMP_EXECUCAO);
+
+
+    fclose(LOG);
+}
