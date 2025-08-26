@@ -24,7 +24,8 @@ int Menu_Automoveis(){
     printf("--------------------------------------------------------------------------------\n");
 
     printf("\n[1] Registrar um Automovel.\n[2] Buscar um Automovel.\n[3] Editar um Automovel.\n[4] Verificar os Automoveis alugados.\n");
-    printf("[5] Verificar os Automoveis vendidos.\n[6] Imprimir Base de Dados Completa.\n[7] Ordenar Base de Dados com Selection Sort.\n[8] Sair do Setor de Automoveis.\n\n");
+    printf("[5] Verificar os Automoveis vendidos.\n[6] Imprimir Base de Dados Completa.\n[7] Ordenar Base de Dados com Selection Sort.\n");
+    printf("[8] Classificacao Externa (Selecao Natural e Intercalacao Otima).\n[9] Sair do Setor de Automoveis.\n\n");
 
     printf("Escolha: ");
     scanf("%d", &escolha);
@@ -40,8 +41,8 @@ int Menu_Funcionarios(){
     printf("--------------------------------------------------------------------------------\n");
 
     printf("\n[1] Registrar Funcionario.\n[2] Buscar Funcionario.\n[3] Editar Funcionario.\n[4] Buscar Cliente cadastrado.\n[5] Editar Cliente.\n");
-    printf("[6] Imprimir Base de Dados Completa.\n[7] Ordenar Base de Dados com Selection Sort.\n");
-    printf("[8] Sair da area destinada a Funcionarios.\n\n");
+    printf("[6] Imprimir Base de Dados Completa.\n[7] Ordenar Base de Dados com Selection Sort.\n[8] Classificacao Externa (Selecao Natural e Intercalacao Otima).\n");
+    printf("[9] Sair da area destinada a Funcionarios.\n\n");
 
     printf("Escolha: ");
     scanf("%d", &escolha);
@@ -59,7 +60,7 @@ int Menu_Cliente(){
 
     printf("\n[1] Alugar um Automovel.\n[2] Comprar um Automovel.\n[3] Buscar um Automovel.\n[4] Devolver Automovel alugado.");
     printf("\n[5] Imprimir Base de Dados Completa.\n[6] Ordenar Base de Dados com Selection Sort.\n");
-    printf("[7] Sair da area destinada a Clientes.\n\n");
+    printf("[7] Classificacao Externa (Selecao Natural e Intercalacao Otima).\n[8] Sair da area destinada a Clientes.\n\n");
 
     printf("Escolha: ");
     scanf("%d", &escolha);

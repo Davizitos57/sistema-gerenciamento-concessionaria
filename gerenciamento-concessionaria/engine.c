@@ -8,9 +8,10 @@
 #include "buscas\busca_sequencial.c"
 #include "buscas\busca_binaria.c"
 #include "ordenacao\selection_sort.c"
+#include "ordenacao\selecao_natural.c"
+#include "ordenacao\intercalacao_otima.c"
 #include "menu.c"
 
-//Função principal que controla o fluxo do programa
 void seletor(FILE* automoveis, FILE* clientes, FILE* funcionarios, FILE *ArquivoLOG){
 
     bool end = true;
@@ -35,7 +36,7 @@ void seletor(FILE* automoveis, FILE* clientes, FILE* funcionarios, FILE *Arquivo
                 system("cls");
                 printf("Encerrando programa...");
                 end = false;
-            break;            
+            break;      
             
             default:
                 printf("\nOpcao invalida, tente novamente\n");        
@@ -53,6 +54,7 @@ void Switch_Automoveis(FILE* carros, FILE *ArquivoLOG){
     bool end = true;
     int escolha_auto = 0;
     int procuradoA = 0;
+    int NP = 0;
 
     do{
 
@@ -118,11 +120,11 @@ void Switch_Automoveis(FILE* carros, FILE *ArquivoLOG){
                         scanf("%d", &alterar);
                         
                         if(alterar == 1){
-                            criaAutomoveisManual(c, NULL); 
+                            criaAutomoveisManual(c, NULL); //Cria ou Edita os automoveis manualmente
                         }
                         else if(alterar == 2){
                             printf("\nDigite o nome do automovel: ");
-                            while(getchar() != '\n'); 
+                            while(getchar() != '\n'); // Limpa buffer de entrada
                             fgets(c->nome, sizeof(c->nome), stdin);
                             c->nome[strcspn(c->nome, "\n")] = '\0';
 
@@ -145,8 +147,9 @@ void Switch_Automoveis(FILE* carros, FILE *ArquivoLOG){
                     else{
                         criaAutomoveisManual(c, NULL);
                     }
-                    fseek(carros, posicao * sizeof(TCarros), SEEK_SET); 
+                    fseek(carros, posicao * sizeof(TCarros), SEEK_SET);
                     salvarAutomoveis(c, carros); 
+
                     imprimirCarro(c);
                 }
             break;
@@ -171,6 +174,20 @@ void Switch_Automoveis(FILE* carros, FILE *ArquivoLOG){
             break;
 
             case 8:
+                system("cls");
+                printf("Informe quantos registros do arquivo serao lidos para a memoria.\n");
+                printf("Sua escolha: ");
+                scanf("%d", &NP);
+
+                int NPcriadas = SelecaoNaturalAutomoveis(carros, NP, ArquivoLOG);
+                printf("Numero de particoes criadas: %d\n", NPcriadas+1);
+
+                printf("\nComecando a parte da intercalacao otima...\n");
+                IntercalacaoOtimaAutomovel(NPcriadas, "Automoveis.dat", ArquivoLOG);
+                printf("\nClassificacao Externa Finalizada\n");
+            break;
+
+            case 9:
                 system("cls");
                 printf("Saindo do setor de Automoveis...");
                 printf("\n------------------------------------------------------------------------------------------------------\n");
@@ -198,13 +215,14 @@ void Switch_Clientes(FILE* clientes, FILE *ArquivoLOG){
         return;
     }
     if (funcionarios == NULL) {
-        printf("Erro ao abrir o arquivo Carros.dat\n");
+        printf("Erro ao abrir o arquivo Funcionarios.dat\n");
         return;
     }
     
     bool end = true;
     int escolha_cliente = 0;
     int procuradoAC = 0;
+    int NP = 0;
 
     do{
 
@@ -270,6 +288,20 @@ void Switch_Clientes(FILE* clientes, FILE *ArquivoLOG){
 
             case 7:
                 system("cls");
+                printf("Informe quantos registros do arquivo serao lidos para a memoria.\n");
+                printf("Sua escolha: ");
+                scanf("%d", &NP);
+
+                int NPcriadas = SelecaoNaturalCliente(clientes, NP, ArquivoLOG);
+                printf("Numero de particoes criadas: %d\n", NPcriadas+1);
+
+                printf("\nComecando a parte da intercalacao otima...\n");
+                IntercalacaoOtimaCliente(NPcriadas, "Clientes.dat", ArquivoLOG);
+                printf("\nClassificacao Externa Finalizada\n");
+            break;
+
+            case 8:
+                system("cls");
                 printf("Saindo da area destinada a Clientes...");
                 printf("\n------------------------------------------------------------------------------------------------------\n");
                 end = false;
@@ -297,6 +329,7 @@ void Switch_Funcionarios(FILE* func, FILE *ArquivoLOG){
     int procuradoF = 0; 
     int escolha_cli = 0;
     int procuradoC = 0;
+    int NP = 0;
 
     FILE *clientes = fopen("Clientes.dat", "r+b");
     if (clientes == NULL) {
@@ -429,12 +462,12 @@ void Switch_Funcionarios(FILE* func, FILE *ArquivoLOG){
                 int posicao = (int)BuscaSequencialEditarCliente(clientes, procuradoC, NULL, &cli);
 
                 if(posicao != -1){
-                    criaClienteManual(cli, NULL);
+                    criaClienteManual(cli, NULL); 
                     fseek(clientes, posicao * sizeof(TCliente), SEEK_SET); 
                     salvarCliente(cli, clientes); 
                     imprimecliente(cli);
 
-                    rewind(carros); 
+                    rewind(carros);
                     TCarros *carro;
                     while((carro = leitura_arquivo_carros(carros)) != NULL){
                         if(carro->cliente.codigo == procuradoC){
@@ -461,6 +494,22 @@ void Switch_Funcionarios(FILE* func, FILE *ArquivoLOG){
             break;
 
             case 8:
+                system("cls");
+                printf("Informe quantos registros do arquivo serao lidos para a memoria.\n");
+                printf("Sua escolha: ");
+                scanf("%d", &NP);
+
+                int NPcriadas = SelecaoNaturalFuncionario(func, NP, ArquivoLOG);
+                printf("Numero de particoes criadas: %d\n", NPcriadas+1);
+
+                printf("\nComecando a parte da intercalacao otima...\n");
+
+                IntercalacaoOtimaFuncionario(NPcriadas,"Funcionarios.dat", ArquivoLOG);
+
+                printf("\nClassificacao Externa Finalizada\n");
+            break;
+
+            case 9:
                 system("cls");
                 printf("Saindo da area destinada a Funcionarios...");
                 printf("\n------------------------------------------------------------------------------------------------------\n");

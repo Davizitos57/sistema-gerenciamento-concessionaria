@@ -169,4 +169,33 @@ void Salvar_LOG_SS(FILE *LOG, int contador, double TEMP_EXECUCAO){
     fclose(LOG);
 
 }
+
+void Salvar_LOG_Particoes(FILE *LOG, int contador, double TEMP_EXECUCAO){
+    LOG = fopen("ArquivoLOG_SelecaoNatural.txt", "a");
+
+    if(LOG == NULL){
+        printf("Nao foi possivel abrir o arquivo");
+        return;
+    }
+    fprintf(LOG, "\n---------- SELECAO NATURAL ----------\n");
+    fprintf(LOG, "Número de comparações: %d\n", contador);
+    fprintf(LOG, "Tempo de execucao da criacao de particoes: %f\n", TEMP_EXECUCAO);
+
+    fclose(LOG);
+}
+
+void Salvar_LOG_IntercalacaoOtima(FILE *LOG, int contador, double TEMP_EXECUCAO){
+    LOG = fopen("ArquivoLOG_IntercalacaoOtima.txt", "a");
+
+    if(LOG == NULL){
+        printf("Nao foi possivel abrir o arquivo");
+        return;
+    }
+    fprintf(LOG, "\n---------- INTERCALACAO OTIMA ----------\n");
+    fprintf(LOG, "Número de comparações: %d\n", contador);
+    fprintf(LOG, "Tempo de execucao da intercalacao: %f\n", TEMP_EXECUCAO);
+
+    fclose(LOG);
+}
+
 #endif

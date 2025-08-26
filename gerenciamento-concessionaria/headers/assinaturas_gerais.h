@@ -9,6 +9,7 @@
 #include <math.h>
 #include <stdarg.h>  
 #include <stdbool.h>
+#include <limits.h>
 
 //Definições de constantes
 #define DISPONIVEL 0
