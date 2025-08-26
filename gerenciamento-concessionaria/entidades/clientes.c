@@ -1,4 +1,5 @@
 #include "headers\assinaturas_clientes.h"
+#include "headers\assinaturas_automoveis.h"
 
 int tamanho_cliente(){    
     return ((sizeof(char) * 50) + (sizeof(char) * 20) + (sizeof(char) * 20) + (sizeof(char) * 50));
