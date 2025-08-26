@@ -7,6 +7,7 @@
 #include "entidades\funcionarios.c"
 #include "buscas\busca_sequencial.c"
 #include "buscas\busca_binaria.c"
+#include "ordenacao\selection_sort.c"
 #include "menu.c"
 
 //Função principal que controla o fluxo do programa
@@ -159,6 +160,17 @@ void Switch_Automoveis(FILE* carros, FILE *ArquivoLOG){
             break;
 
             case 6:
+                imprimirBaseCarros(carros);
+            break;
+
+            case 7:
+                printf("Ordenando base de dados...");
+                Selection_Sort_Automoveis_Disco(carros, ArquivoLOG);
+                system("cls");
+                printf("Base de dados ordenada\n");
+            break;
+
+            case 8:
                 system("cls");
                 printf("Saindo do setor de Automoveis...");
                 printf("\n------------------------------------------------------------------------------------------------------\n");
@@ -246,6 +258,17 @@ void Switch_Clientes(FILE* clientes, FILE *ArquivoLOG){
             break;
 
             case 5:
+                imprimirBaseClientes(clientes);
+            break;
+
+            case 6:
+                printf("Ordenando base de dados...");
+                Selection_Sort_Clientes_Disco(clientes, ArquivoLOG);
+                system("cls");
+                printf("Base de dados ordenada\n");
+            break;
+
+            case 7:
                 system("cls");
                 printf("Saindo da area destinada a Clientes...");
                 printf("\n------------------------------------------------------------------------------------------------------\n");
@@ -427,6 +450,17 @@ void Switch_Funcionarios(FILE* func, FILE *ArquivoLOG){
             break;
 
             case 6:
+                imprimirBaseFuncionarios(func);
+            break;
+
+            case 7:
+                printf("Ordenando base de dados...");
+                Selection_Sort_Funcionario_Disco(func, ArquivoLOG);
+                system("cls");
+                printf("Base de dados ordenada\n");
+            break;
+
+            case 8:
                 system("cls");
                 printf("Saindo da area destinada a Funcionarios...");
                 printf("\n------------------------------------------------------------------------------------------------------\n");

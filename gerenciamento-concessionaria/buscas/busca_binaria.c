@@ -2,10 +2,10 @@
 #define BUSCABINARIA_C
 
 #include "..\headers\busca_binaria.h"
+#include "..\arquivos.c"
 #include "..\entidades\automoveis.c"
 #include "..\entidades\clientes.c"
 #include "..\entidades\funcionarios.c"
-#include "..\arquivos.c"
 
 
 //Função para realizar uma busca binária em funcionários

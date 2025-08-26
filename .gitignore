@@ -1,2 +1,6 @@
 #ignorando VSCode settings
 .vscode/
+
+#ignorando output
+output
+main.exe

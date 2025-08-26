@@ -51,7 +51,6 @@ void embralhabases(int *vet, int TAM) {
     }
 }
 
-//Função para criar todas as bases ao mesmo tempo e no mesmo estilo "ordenado"
 void criarBasesOrdenadasGeral (FILE *automoveis, FILE *clientes, FILE *funcionarios, int tamanho){
 
     int tamanhocliente = tamanho/2;
@@ -88,7 +87,6 @@ void criarBasesOrdenadasGeral (FILE *automoveis, FILE *clientes, FILE *funcionar
     }
 }
 
-//Função para criar todas bases ao mesmo tempo e no mesmo estilo "embaralhado"
 void criarBasesEmbaralhadasGeral (FILE *automoveis, FILE *clientes, FILE *funcionarios, int tamanho){
 
     int tamanhocliente = tamanho/2;
@@ -125,7 +123,6 @@ void criarBasesEmbaralhadasGeral (FILE *automoveis, FILE *clientes, FILE *funcio
     }
 }
 
-//Salva o tempo e quantidade de iterações em um arquivo LOG.txt
 void Salvar_LOG_B(FILE *LOG, int contador, double TEMP_EXECUCAO){
     LOG = fopen("ArquivoLOG.txt", "a");
     
@@ -142,7 +139,6 @@ void Salvar_LOG_B(FILE *LOG, int contador, double TEMP_EXECUCAO){
     fclose(LOG);
 }
 
-//Salva o tempo e quantidade de iterações em um arquivo LOG.txt
 void Salvar_LOG_S(FILE *LOG, int contador, double TEMP_EXECUCAO){
     LOG = fopen("ArquivoLOG.txt", "a");
     
@@ -157,5 +153,20 @@ void Salvar_LOG_S(FILE *LOG, int contador, double TEMP_EXECUCAO){
 
 
     fclose(LOG);
+}
+
+void Salvar_LOG_SS(FILE *LOG, int contador, double TEMP_EXECUCAO){
+    LOG = fopen("ArquivoLOG_SelectionSort.txt", "a");
+
+    if(LOG == NULL){
+        printf("Nao foi possivel abrir o arquivo");
+        return;
+    }
+    fprintf(LOG, "\n---------- SELECTION SORT ----------\n");
+    fprintf(LOG, "Numero de comparações: %d\n", contador);
+    fprintf(LOG, "Tempo de execucao da ordenacao: %f\n", TEMP_EXECUCAO);
+
+    fclose(LOG);
+
 }
 #endif

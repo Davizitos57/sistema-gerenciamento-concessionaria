@@ -2,10 +2,10 @@
 #define BUSCASEQUENCIAL_C
 
 #include "..\headers\busca_sequencial.h"
+#include "..\arquivos.c"
 #include "..\entidades\automoveis.c"
 #include "..\entidades\clientes.c"
 #include "..\entidades\funcionarios.c"
-#include "..\arquivos.c"
 
 //Função para realizar busca sequencial em funcionários
 TFuncionario *BuscaSequencialFuncionario(FILE *arquivo, int chave, FILE *ArquivoLOGSequencial){
