@@ -2,6 +2,7 @@
 #include "headers\assinaturas_automoveis.h"
 #include "headers\assinaturas_funcionarios.h"
 #include "headers\assinaturas_clientes.h"
+#include "headers\busca_sequencial.h"
 
 int tamanho_cliente(){    
     return ((sizeof(char) * 50) + (sizeof(char) * 20) + (sizeof(char) * 20) + (sizeof(char) * 50));
@@ -156,4 +157,207 @@ void imprimirBaseClientes (FILE *out){
         imprimecliente(c);
     }
     free(c);
+}
+
+//Função para alugar um automóvel para um cliente
+void AlugarAutomovelCliente (FILE *carros, FILE *clientes, FILE *funcionarios){
+
+    system("cls");
+    imprimirBaseCarrosDisponiveis(carros);
+
+    int codigoAutomovel, codigoFunc;
+
+    TCarros *carro = NULL;
+    TFuncionario *funcionario = NULL;
+    TCliente *cliente = (TCliente *)malloc(sizeof(TCliente));
+
+    if(cliente == NULL){
+        printf("Erro ao alocar memoria para cliente.\n");
+        exit(1);
+    }
+
+    criaClienteManual(cliente, clientes);
+
+    printf("\nDigite o codigo do automovel: ");
+    scanf("%d", &codigoAutomovel);
+
+    carro = BuscaSequencialAutomovel(carros, codigoAutomovel, NULL);
+    if(carro == NULL){
+        printf("Automovel nao encontrado.\n");
+        free(cliente);
+        return;
+    }
+
+    if (carro->situacao == ALUGADO) {
+        printf("\nAutomovel ja esta alugado por outro cliente.\n");
+        free(cliente);
+        free(carro);
+        return;
+    }
+
+    if(carro->situacao == VENDIDO){
+        printf("\nAutomovel ja foi vendido para outro cliente.\n");
+        free(cliente);
+        free(carro);
+        return;
+    }
+
+    printf("\nDigite o codigo do funcionario responsavel pelo aluguel do automovel: ");
+    scanf("%d", &codigoFunc);
+
+    funcionario = BuscaSequencialFuncionario(funcionarios, codigoFunc, NULL);
+    if(funcionario == NULL){
+        printf("Funcionario nao encontrado.\n");
+        free(cliente);
+        return;
+    }
+
+    carro->cliente = *cliente;
+    carro->funcionario = *funcionario;
+    carro->situacao = -1;
+
+    // Salvar automóvel atualizado
+    fseek(carros, -sizeof(TCarros), SEEK_CUR);
+    salvarAutomoveis(carro, carros);
+
+    printf("Automovel associado ao cliente com sucesso.\n");
+
+    free(cliente);
+    free(carro);
+    free(funcionario);
+}
+
+// Função para vender um automóvel para um cliente
+void ComprarAutomovelCliente (FILE *carros, FILE *clientes, FILE *funcionarios){
+
+    system("cls");
+    imprimirBaseCarrosDisponiveis(carros);
+
+    int codigoAutomovel, codigoFunc;
+
+    TCarros *carro = NULL;
+    TFuncionario *funcionario = NULL;
+    TCliente *cliente = (TCliente *)malloc(sizeof(TCliente));
+
+    if(cliente == NULL){
+        printf("Erro ao alocar memoria para cliente.\n");
+        exit(1);
+    }
+
+    criaClienteManual(cliente, clientes);
+
+    printf("\nDigite o codigo do automovel: ");
+    scanf("%d", &codigoAutomovel);
+
+    carro = BuscaSequencialAutomovel(carros, codigoAutomovel, NULL);
+    if(carro == NULL){
+        printf("Automovel nao encontrado.\n");
+        free(cliente);
+        return;
+    }
+
+    if (carro->situacao == ALUGADO) {
+        printf("\nAutomovel ja esta alugado por outro cliente.\n");
+        free(cliente);
+        free(carro);
+        return;
+    }
+
+    if (carro->situacao == VENDIDO) {
+        printf("\nAutomovel ja foi vendido para outro cliente.\n");
+        free(cliente);
+        free(carro);
+        return;
+    }
+
+    printf("\nDigite o codigo do funcionario responsavel pela venda do automovel: ");
+    scanf("%d", &codigoFunc);
+
+    funcionario = BuscaSequencialFuncionario(funcionarios, codigoFunc, NULL);
+    if(funcionario == NULL){
+        printf("Funcionario nao encontrado.\n");
+        free(cliente);
+        return;
+    }
+
+    carro->cliente = *cliente;
+    carro->funcionario = *funcionario;
+    carro->situacao = 1;
+
+    // Salvar automóvel atualizado
+    fseek(carros, -sizeof(TCarros), SEEK_CUR);
+    salvarAutomoveis(carro, carros);
+
+    printf("Automovel associado ao cliente com sucesso.\n");
+
+    free(cliente);
+    free(carro);
+    free(funcionario);
+}
+
+//Função para fazer a devolução de um automóvel alugado por um cliente
+void DevolverAutomovelCliente(FILE *carros, FILE *clientes) {
+    
+    int codigo_cliente = 0;
+    int codigo_automovel = 0;
+    TCarros *carro = NULL;
+    TCliente *cliente = NULL;
+
+    printf("\nPor favor, para devolver o automovel alugado, insira algumas informacoes.");
+    printf("\nDigite o codigo do cliente: ");
+    scanf("%d", &codigo_cliente);
+
+    // Buscar cliente
+    rewind(clientes);
+    while ((cliente = leitura_arquivo_cliente(clientes)) != NULL) {
+        if (cliente->codigo == codigo_cliente) {
+            break;
+        }
+        free(cliente);
+        cliente = NULL;
+    }
+
+    if (cliente == NULL) {
+        printf("Cliente nao encontrado.\n");
+        return;
+    }
+
+    printf("\nDigite o codigo do automovel: ");
+    scanf("%d", &codigo_automovel);
+
+    // Buscar automóvel
+    rewind(carros);
+    while ((carro = leitura_arquivo_carros(carros)) != NULL) {
+        if (carro->codigo == codigo_automovel) {
+            break;
+        }
+        free(carro);
+        carro = NULL;
+    }
+
+    if (carro == NULL) {
+        printf("Automovel nao encontrado.\n");
+        free(cliente);
+        return;
+    }
+
+    if (carro->situacao == ALUGADO && carro->cliente.codigo == codigo_cliente) {
+        // Atualizar a situação do carro para disponível
+        carro->situacao = DISPONIVEL;
+        memset(&carro->cliente, 0, sizeof(TCliente));
+        memset(&carro->funcionario, 0, sizeof(TFuncionario));
+
+        // Salvar carro atualizado
+        fseek(carros, -sizeof(TCarros), SEEK_CUR);
+        salvarAutomoveis(carro, carros);
+
+        printf("Carro devolvido com sucesso.\n");
+    } else if (carro->situacao == VENDIDO) {
+        printf("Esse carro foi vendido e nao pode ser devolvido.\n");
+    } else {
+        printf("Esse carro nao foi alugado por esse cliente.\n");
+    }
+
+    free(cliente);
+    free(carro);
 }
