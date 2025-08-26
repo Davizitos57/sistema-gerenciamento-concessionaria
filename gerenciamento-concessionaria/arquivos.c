@@ -1,4 +1,10 @@
+#ifndef ARQUIVOS_C
+#define ARQUIVOS_C
+
 #include "headers\arquivos.h"
+#include "entidades\automoveis.c"
+#include "entidades\clientes.c"
+#include "entidades\funcionarios.c"
 
 void abre_arquivos(FILE **automoveis, FILE **clientes, FILE **funcionarios){
     *automoveis = fopen("Automoveis.dat", "w+b");
@@ -152,3 +158,4 @@ void Salvar_LOG_S(FILE *LOG, int contador, double TEMP_EXECUCAO){
 
     fclose(LOG);
 }
+#endif

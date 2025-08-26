@@ -1,19 +1,19 @@
-#include "headers\assinaturas_automoveis.h"
+#ifndef AUTOMOVEIS_C
+#define AUTOMOVEIS_C
 
-//Função para calcular o tamanho de um automóvel
+#include "..\headers\assinaturas_automoveis.h"
+
 int tamanho_automovel(){
     return ((sizeof(char) * 50) + (sizeof(char) * 20) + (sizeof(char) * 20) + (sizeof(int)) + (sizeof(double)) + 
     (sizeof(TFuncionario)) + (sizeof(TCliente)) + (sizeof(int)));
 }
 
-//Função para calcular o tamanho do arquivo de automóveis
 int tamanho_arquivo_automovel(FILE *out){
     fseek(out, 0, SEEK_END);
     int tamanho = ftell(out) / sizeof(TCarros);
     return tamanho;
 }
 
-//Função para ler um automóvel do arquivo
 TCarros *leitura_arquivo_carros(FILE *in){
     TCarros *carro = (TCarros *) malloc(sizeof(TCarros));
 
@@ -32,13 +32,11 @@ TCarros *leitura_arquivo_carros(FILE *in){
     return carro;
 }
 
-//Função para salvar um automóvel no arquivo
 void salvarAutomoveis(TCarros *carro, FILE *out){
     fwrite(carro, sizeof(TCarros), 1, out);
     fflush(out);
 }
 
-//Função para criar um automóvel manualmente
 TCarros *criaAutomoveisManual(TCarros *carro, FILE *out){
 
     if(carro == NULL){
@@ -107,7 +105,6 @@ TCarros *criaAutomoveis(char *nome, char *marca, char *modelo, int codigo, doubl
     return carro;
 }
 
-//Função para criar uma base ordenada de automóveis
 void criarBaseOrdenadaCarros(FILE *out, int tamanho){
     
     int vet[tamanho];
@@ -126,7 +123,6 @@ void criarBaseOrdenadaCarros(FILE *out, int tamanho){
     free(cr);
 }
 
-//Função para criar uma base embaralhada de automóveis
 void criarBaseEmbaralhadaCarros(FILE *out, int tamanho){
     
     int vet[tamanho];
@@ -147,7 +143,6 @@ void criarBaseEmbaralhadaCarros(FILE *out, int tamanho){
     free(cr);
 }
 
-//Função para imprimir os dados de um automóvel
 void imprimirCarro(TCarros *carro){
     
     printf("\n| Nome do automovel: %s\n| Marca do automovel: %s\n| Modelo do automovel: %s\n", carro->nome, carro->marca_veiculo,carro->modelo_veiculo);
@@ -170,7 +165,6 @@ void imprimirCarro(TCarros *carro){
     printf("\n\n==============================================================================\n\n");  
 }
 
-//Função para imprimir a base de dados dos automóveis
 void imprimirBaseCarros(FILE *out){
     system("cls");
     
@@ -186,7 +180,6 @@ void imprimirBaseCarros(FILE *out){
     free(carro);
 }
 
-//Função para imprimir a base de dados de automóveis alugados
 void imprimirBaseCarrosAlugados(FILE *out){
     system("cls");
 
@@ -203,7 +196,6 @@ void imprimirBaseCarrosAlugados(FILE *out){
     }
 }
 
-// Função para imprimir a base de dados de automóveis vendidos
 void imprimirBaseCarrosVendidos(FILE *out){
     system("cls");
 
@@ -235,3 +227,4 @@ void imprimirBaseCarrosDisponiveis(FILE *out){
         free(carro);
     }
 }
+#endif

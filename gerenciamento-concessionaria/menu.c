@@ -1,4 +1,7 @@
-#include "headers\assinaturas_gerais.h"
+#ifndef MENUS_C
+#define MENUS_C
+
+#include "headers\menu.h"
 
 int Menu_Principal(){
     int escolha = 0;
@@ -62,3 +65,4 @@ int Menu_Cliente(){
     return escolha;
 
 }
+#endif

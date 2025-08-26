@@ -1,4 +1,12 @@
-#include "headers\busca_binaria.h"
+#ifndef BUSCABINARIA_C
+#define BUSCABINARIA_C
+
+#include "..\headers\busca_binaria.h"
+#include "..\entidades\automoveis.c"
+#include "..\entidades\clientes.c"
+#include "..\entidades\funcionarios.c"
+#include "..\arquivos.c"
+
 
 //Função para realizar uma busca binária em funcionários
 TFuncionario *BuscaBinariaFunc(int chave, FILE *arquivo, FILE *ArquivoLOGBinario) {
@@ -161,3 +169,4 @@ TCliente *BuscaBinariaCliente(int chave, FILE *arquivo, FILE *ArquivoLOGBinario)
         return NULL;
     }
 }
+#endif

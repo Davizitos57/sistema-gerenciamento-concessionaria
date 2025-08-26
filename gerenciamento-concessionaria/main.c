@@ -1,6 +1,10 @@
 #include "headers\assinaturas_gerais.h"
 #include "headers\arquivos.h"
 #include "headers\engine.h"
+#include "headers\menu.h"
+#include "engine.c"
+#include "arquivos.c"
+#include "menu.c"
 
 int main(){
     FILE *automoveis = NULL, *clientes = NULL, *funcionarios = NULL;

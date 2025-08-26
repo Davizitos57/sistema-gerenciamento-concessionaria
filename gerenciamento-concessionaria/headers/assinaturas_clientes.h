@@ -2,7 +2,6 @@
 #define ASSINATURASCLIENTES_H_INCLUDED
 
 #include "assinaturas_gerais.h"
-#include "assinaturas_funcionarios.h"
 
 typedef struct {
 

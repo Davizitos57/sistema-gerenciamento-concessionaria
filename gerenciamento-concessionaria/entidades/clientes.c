@@ -1,18 +1,19 @@
-#include "headers\assinaturas_clientes.h"
-#include "headers\assinaturas_automoveis.h"
+#ifndef CLIENTES_C
+#define CLIENTES_C
+
+#include "..\headers\assinaturas_clientes.h"
+#include "..\headers\assinaturas_automoveis.h"
 
 int tamanho_cliente(){    
     return ((sizeof(char) * 50) + (sizeof(char) * 20) + (sizeof(char) * 20) + (sizeof(char) * 50));
 }
 
-//Função para calcular o tamanho do arquivo de clientes
 int tamanho_arquivo_clientes(FILE *out){
     fseek(out, 0, SEEK_END);
     int tamanho = ftell(out) / sizeof(TCliente);
     return tamanho;
 }
 
-//Função para ler um cliente do arquivo
 TCliente *leitura_arquivo_cliente(FILE *in) {
     TCliente *cliente = (TCliente *)malloc(sizeof(TCliente));
     if (fread(cliente, sizeof(TCliente), 1, in) != 1) {
@@ -22,13 +23,11 @@ TCliente *leitura_arquivo_cliente(FILE *in) {
     return cliente;
 }
 
-//Função para salvar um cliente no arquivo
 void salvarCliente(TCliente *cliente, FILE *out) {
     fwrite(cliente, sizeof(TCliente), 1, out);
     fflush(out);
 }
 
-//Função para criar um cliente manualmente
 TCliente *criaClienteManual (TCliente *cliente, FILE *out){
 
     if(cliente == NULL){
@@ -71,7 +70,6 @@ TCliente *criaClienteManual (TCliente *cliente, FILE *out){
 
 }
 
-//Função para criar um cliente com parâmetros
 TCliente *criaCliente(char *nome, char *cpf, char *telefone, char *endereco, int codigo){
 
     TCliente *c = (TCliente *)malloc(sizeof(TCliente));
@@ -89,7 +87,6 @@ TCliente *criaCliente(char *nome, char *cpf, char *telefone, char *endereco, int
     return c;
 }
 
-//Função para criar uma base ordenada de clientes
 void criarBaseOrdenadaCliente(FILE *out, int tamanho){
     
     int vet[tamanho];
@@ -109,7 +106,6 @@ void criarBaseOrdenadaCliente(FILE *out, int tamanho){
     free(c);
 }
 
-//Função para criar uma base embaralhada de clientes
 void criarBaseEmbaralhadaCliente(FILE *out, int tamanho){
     
     int vet[tamanho];
@@ -131,7 +127,6 @@ void criarBaseEmbaralhadaCliente(FILE *out, int tamanho){
     free(c);
 }
 
-// Função para imprimir um cliente
 void imprimecliente(TCliente *c) {
     printf("\n| Nome do cliente: %s\n| CPF: %s\n| Telefone: %s\n", c->nome, c->cpf , c->telefone);
     printf("| Endereco: %s\n", c->endereco); 
@@ -140,7 +135,6 @@ void imprimecliente(TCliente *c) {
 
 }
 
-//Função para imprimir a base de um cliente
 void imprimirBaseClientes (FILE *out){
     system("cls");
     
@@ -156,7 +150,6 @@ void imprimirBaseClientes (FILE *out){
     free(c);
 }
 
-//Função para alugar um automóvel para um cliente
 void AlugarAutomovelCliente (FILE *carros, FILE *clientes, FILE *funcionarios){
 
     system("cls");
@@ -213,7 +206,6 @@ void AlugarAutomovelCliente (FILE *carros, FILE *clientes, FILE *funcionarios){
     carro->funcionario = *funcionario;
     carro->situacao = -1;
 
-    // Salvar automóvel atualizado
     fseek(carros, -sizeof(TCarros), SEEK_CUR);
     salvarAutomoveis(carro, carros);
 
@@ -224,7 +216,6 @@ void AlugarAutomovelCliente (FILE *carros, FILE *clientes, FILE *funcionarios){
     free(funcionario);
 }
 
-// Função para vender um automóvel para um cliente
 void ComprarAutomovelCliente (FILE *carros, FILE *clientes, FILE *funcionarios){
 
     system("cls");
@@ -281,7 +272,6 @@ void ComprarAutomovelCliente (FILE *carros, FILE *clientes, FILE *funcionarios){
     carro->funcionario = *funcionario;
     carro->situacao = 1;
 
-    // Salvar automóvel atualizado
     fseek(carros, -sizeof(TCarros), SEEK_CUR);
     salvarAutomoveis(carro, carros);
 
@@ -292,7 +282,6 @@ void ComprarAutomovelCliente (FILE *carros, FILE *clientes, FILE *funcionarios){
     free(funcionario);
 }
 
-//Função para fazer a devolução de um automóvel alugado por um cliente
 void DevolverAutomovelCliente(FILE *carros, FILE *clientes) {
     
     int codigo_cliente = 0;
@@ -304,7 +293,6 @@ void DevolverAutomovelCliente(FILE *carros, FILE *clientes) {
     printf("\nDigite o codigo do cliente: ");
     scanf("%d", &codigo_cliente);
 
-    // Buscar cliente
     rewind(clientes);
     while ((cliente = leitura_arquivo_cliente(clientes)) != NULL) {
         if (cliente->codigo == codigo_cliente) {
@@ -322,7 +310,6 @@ void DevolverAutomovelCliente(FILE *carros, FILE *clientes) {
     printf("\nDigite o codigo do automovel: ");
     scanf("%d", &codigo_automovel);
 
-    // Buscar automóvel
     rewind(carros);
     while ((carro = leitura_arquivo_carros(carros)) != NULL) {
         if (carro->codigo == codigo_automovel) {
@@ -339,12 +326,10 @@ void DevolverAutomovelCliente(FILE *carros, FILE *clientes) {
     }
 
     if (carro->situacao == ALUGADO && carro->cliente.codigo == codigo_cliente) {
-        // Atualizar a situação do carro para disponível
         carro->situacao = DISPONIVEL;
         memset(&carro->cliente, 0, sizeof(TCliente));
         memset(&carro->funcionario, 0, sizeof(TFuncionario));
 
-        // Salvar carro atualizado
         fseek(carros, -sizeof(TCarros), SEEK_CUR);
         salvarAutomoveis(carro, carros);
 
@@ -358,3 +343,4 @@ void DevolverAutomovelCliente(FILE *carros, FILE *clientes) {
     free(cliente);
     free(carro);
 }
+#endif

@@ -7,6 +7,7 @@
 #include "assinaturas_automoveis.h"
 #include "busca_binaria.h"
 #include "busca_sequencial.h"
+#include "menu.h"
 
 void seletor(FILE* automoveis, FILE* clientes, FILE* funcionarios, FILE *ArquivoLOG);
 void Switch_Automoveis(FILE* carros, FILE *ArquivoLOG);

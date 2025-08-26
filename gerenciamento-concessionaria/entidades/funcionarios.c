@@ -1,19 +1,19 @@
-#include "headers\assinaturas_funcionarios.h"
+#ifndef FUNCIONARIOS_C
+#define FUNCIONARIOS_C
 
-//Função para calcular o tamanho de um funcionario
+#include "..\headers\assinaturas_funcionarios.h"
+
 int tamanho_funcionario(){
     
     return ((sizeof(char) * 50) + (sizeof(char) * 15) + (sizeof(char) * 20) + (sizeof(char) * 50) + (sizeof(int)) + (sizeof(double)));
 }
 
-//Função para calcular o tamanho do arquivo de um funcionario
 int tamanho_arquivo_funcionarios(FILE *out){
     fseek(out, 0, SEEK_END);
     int tamanho = ftell(out) / sizeof(TFuncionario);
     return tamanho;
 }   
 
-//Função para ler um funcionário do arquivo
 TFuncionario *leitura_arquivo_funcionario(FILE *in){
     TFuncionario *func = (TFuncionario *)malloc(sizeof(TFuncionario));
     if(fread(func, sizeof(TFuncionario), 1 ,in) != 1){
@@ -24,13 +24,11 @@ TFuncionario *leitura_arquivo_funcionario(FILE *in){
     return func;
 }
 
-//Função para salvar um funcionário no arquivo
 void salvarFuncionario(TFuncionario *func, FILE *out){
     fwrite(func, sizeof(TFuncionario), 1, out);
     fflush(out);
 }
 
-//Função para criar um funcionário manualmente
 TFuncionario *criaFuncionariosManual(TFuncionario *func, FILE *out){
 
     system("cls");
@@ -80,7 +78,6 @@ TFuncionario *criaFuncionariosManual(TFuncionario *func, FILE *out){
 
 }
 
-//Função para criar um funcionário com parâmetros
 TFuncionario *criaFuncionarios(char *nome, char *cpf, char *telefone, char *endereco, int codigo, double salario){
 
 
@@ -104,7 +101,6 @@ TFuncionario *criaFuncionarios(char *nome, char *cpf, char *telefone, char *ende
     return func;
 }
 
-//Função para criar uma base ordenada de funcionários
 void criarBaseOrdenadaFuncionario(FILE *out, int tamanho){
 
     int vet[tamanho];
@@ -124,7 +120,6 @@ void criarBaseOrdenadaFuncionario(FILE *out, int tamanho){
     free(f);
 }
 
-//Função para criar uma base embaralhada de funcionários
 void criarBaseEmbaralhadaFuncionario(FILE *out, int tamanho){
 
 
@@ -148,7 +143,6 @@ void criarBaseEmbaralhadaFuncionario(FILE *out, int tamanho){
     free(f);
 }
 
-//Função para imprimir um funcionário
 void imprimefuncionario(TFuncionario *f) {
 
     printf("\n| Nome do funcionario: %s\n| CPF: %s\n| Telefone: %s\n", f->nome, f->cpf , f->telefone);
@@ -159,7 +153,6 @@ void imprimefuncionario(TFuncionario *f) {
 
 }
 
-//Função para imprimir a base de funcionários
 void imprimirBaseFuncionarios(FILE *out){
 
     system("cls");
@@ -175,3 +168,4 @@ void imprimirBaseFuncionarios(FILE *out){
     }
     free(f);
 }
+#endif

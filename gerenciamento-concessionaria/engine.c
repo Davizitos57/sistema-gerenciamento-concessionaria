@@ -1,4 +1,13 @@
+#ifndef ENGINE_C
+#define ENGINE_C
+
 #include "headers\engine.h"
+#include "entidades\automoveis.c"
+#include "entidades\clientes.c"
+#include "entidades\funcionarios.c"
+#include "buscas\busca_sequencial.c"
+#include "buscas\busca_binaria.c"
+#include "menu.c"
 
 //Função principal que controla o fluxo do programa
 void seletor(FILE* automoveis, FILE* clientes, FILE* funcionarios, FILE *ArquivoLOG){
@@ -435,3 +444,4 @@ void Switch_Funcionarios(FILE* func, FILE *ArquivoLOG){
     fclose(clientes);
 
 }
+#endif

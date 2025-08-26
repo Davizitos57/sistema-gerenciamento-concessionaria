@@ -1,4 +1,11 @@
-#include "headers\busca_sequencial.h"
+#ifndef BUSCASEQUENCIAL_C
+#define BUSCASEQUENCIAL_C
+
+#include "..\headers\busca_sequencial.h"
+#include "..\entidades\automoveis.c"
+#include "..\entidades\clientes.c"
+#include "..\entidades\funcionarios.c"
+#include "..\arquivos.c"
 
 //Função para realizar busca sequencial em funcionários
 TFuncionario *BuscaSequencialFuncionario(FILE *arquivo, int chave, FILE *ArquivoLOGSequencial){
@@ -14,11 +21,10 @@ TFuncionario *BuscaSequencialFuncionario(FILE *arquivo, int chave, FILE *Arquivo
     
     bool flag = false;
 
-    TEMP_INCIAL = clock(); //Marca o tempo inicial
+    TEMP_INCIAL = clock(); 
 
-    rewind(arquivo); //Volta o ponteiro do arquivo para o início
+    rewind(arquivo); 
 
-   //Realiza a busca sequencial
     while((procurado = leitura_arquivo_funcionario(arquivo)) != NULL){
         contador++;
         if(procurado->codigo == chave){
@@ -27,7 +33,7 @@ TFuncionario *BuscaSequencialFuncionario(FILE *arquivo, int chave, FILE *Arquivo
         }
     }
     
-    TEMP_FINAL = clock(); //Marca o tempo final
+    TEMP_FINAL = clock(); 
     TEMP_EXECUCAO = (TEMP_FINAL - TEMP_INCIAL)/CLOCKS_PER_SEC;
  
     //Salva o log da busca sequencial
@@ -78,7 +84,7 @@ TFuncionario *BuscaSequencialEditarFunc(FILE *arquivo, int chave, FILE *ArquivoL
     Salvar_LOG_S(ArquivoLOGSequencial,contador, TEMP_EXECUCAO);
 
     if(flag){
-        return posicao; //Retorna a posição para encontra o local exato em que o novo registro substituira o outro
+        return posicao; 
     }
     else{
         printf("\nFuncionario nao foi encontrado, tem certeza que esse codigo %d existe?\n", chave);
@@ -102,10 +108,9 @@ TCarros *BuscaSequencialAutomovel(FILE *arquivo, int chave, FILE *ArquivoLOGSequ
     int contador = 0;
     
     bool flag = false;
-    TEMP_INCIAL = clock(); //Marca o tempo inicial
-    rewind(arquivo); //Volta o ponteiro do arquivo para o início
+    TEMP_INCIAL = clock(); 
+    rewind(arquivo); 
 
-    //Realiza a busca sequencial
     while((procurado = leitura_arquivo_carros(arquivo)) != NULL){
         contador++;
         if(procurado->codigo == chave){
@@ -114,7 +119,7 @@ TCarros *BuscaSequencialAutomovel(FILE *arquivo, int chave, FILE *ArquivoLOGSequ
         }
     }
 
-    TEMP_FINAL = clock(); //Marca o tempo final
+    TEMP_FINAL = clock(); 
     TEMP_EXECUCAO = (TEMP_FINAL - TEMP_INCIAL)/CLOCKS_PER_SEC;
 
     //Salva o log da busca sequencial
@@ -167,7 +172,7 @@ TCarros *BuscaSequencialEditarCarro(FILE *arquivo, int chave, FILE *ArquivoLOGSe
     Salvar_LOG_S(ArquivoLOGSequencial,contador, TEMP_EXECUCAO);
 
     if(flag){
-        return posicao; //Retorna a posição para encontra o local exato em que o novo registro substituira o outro
+        return posicao; 
     }
     else{
         printf("\nAutomovel nao foi encontrado, tem certeza que esse codigo %d existe?\n", chave);
@@ -187,11 +192,10 @@ TCliente *BuscaSequencialCliente(FILE *arquivo, int chave, FILE *ArquivoLOGSeque
 
     int contador = 0;
     bool flag = false;
-    TEMP_INICIAL = clock(); //Marca o tempo inicial
+    TEMP_INICIAL = clock(); 
 
-    rewind(arquivo);  //Volta o ponteiro do arquivo para o início
+    rewind(arquivo);  
 
-    //Realiza a busca sequencial
     while((procuradoC = leitura_arquivo_cliente(arquivo)) != NULL){
         contador++;
         if(procuradoC->codigo == chave){
@@ -200,7 +204,7 @@ TCliente *BuscaSequencialCliente(FILE *arquivo, int chave, FILE *ArquivoLOGSeque
         }
     }
 
-    TEMP_FINAL = clock();  //Marca o tempo final
+    TEMP_FINAL = clock();  
     TEMP_EXECUCAO = (TEMP_FINAL-TEMP_INICIAL)/CLOCKS_PER_SEC;
 
     //Salva o log da busca sequencial
@@ -251,7 +255,7 @@ TCliente *BuscaSequencialEditarCliente(FILE *arquivo, int chave, FILE *ArquivoLO
     Salvar_LOG_S(ArquivoLOGSequencial,contador, TEMP_EXECUCAO);
 
     if(flag){
-        return posicao; //Retorna a posição para encontra o local exato em que o novo registro substituira o outro
+        return posicao; 
     }
     else{
         printf("\nCliente nao foi encontrado, tem certeza que esse codigo %d existe?\n", chave);
@@ -259,3 +263,4 @@ TCliente *BuscaSequencialEditarCliente(FILE *arquivo, int chave, FILE *ArquivoLO
         return -1;
     }
 }
+#endif
