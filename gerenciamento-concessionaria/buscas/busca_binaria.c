@@ -1,7 +1,4 @@
-#include "headers\assinaturas_gerais.h"
-#include "headers\assinaturas_automoveis.h"
-#include "headers\assinaturas_clientes.h"
-#include "headers\assinaturas_funcionarios.h"
+#include "headers\busca_binaria.h"
 
 //Função para realizar uma busca binária em funcionários
 TFuncionario *BuscaBinariaFunc(int chave, FILE *arquivo, FILE *ArquivoLOGBinario) {

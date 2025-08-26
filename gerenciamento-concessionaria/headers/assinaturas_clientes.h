@@ -2,6 +2,9 @@
 #define ASSINATURASCLIENTES_H_INCLUDED
 
 #include "assinaturas_gerais.h"
+#include "assinaturas_funcionarios.h"
+#include "assinaturas_automoveis.h"
+#include "assinaturas_clientes.h"
 
 typedef struct {
 
@@ -26,5 +29,8 @@ void criarBaseEmbaralhadaCliente(FILE *out, int tamanho);
 void salvarCliente(TCliente *cliente, FILE *out);
 void imprimecliente(TCliente *c);
 void imprimirBaseClientes (FILE *out);
+void AlugarAutomovelCliente (FILE *carros, FILE *clientes, FILE *funcionarios);
+void ComprarAutomovelCliente (FILE *carros, FILE *clientes, FILE *funcionarios);
+void DevolverAutomovelCliente(FILE *carros, FILE *clientes);
 
 #endif

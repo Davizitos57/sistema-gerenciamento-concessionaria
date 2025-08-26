@@ -1,7 +1,4 @@
-#include "headers\assinaturas_gerais.h"
 #include "headers\assinaturas_automoveis.h"
-#include "headers\assinaturas_funcionarios.h"
-#include "headers\assinaturas_clientes.h"
 
 //Função para calcular o tamanho de um automóvel
 int tamanho_automovel(){

@@ -1,7 +1,4 @@
-#include "headers\assinaturas_gerais.h"
-#include "headers\assinaturas_automoveis.h"
-#include "headers\assinaturas_clientes.h"
-#include "headers\assinaturas_funcionarios.h"
+#include "headers\busca_sequencial.h"
 
 //Função para realizar busca sequencial em funcionários
 TFuncionario *BuscaSequencialFuncionario(FILE *arquivo, int chave, FILE *ArquivoLOGSequencial){

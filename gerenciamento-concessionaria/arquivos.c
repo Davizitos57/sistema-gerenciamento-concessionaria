@@ -1,7 +1,4 @@
-#include "headers\assinaturas_gerais.h"
-#include "headers\assinaturas_clientes.h"
-#include "headers\assinaturas_funcionarios.h"
-#include "headers\assinaturas_automoveis.h"
+#include "headers\arquivos.h"
 
 void abre_arquivos(FILE **automoveis, FILE **clientes, FILE **funcionarios){
     *automoveis = fopen("Automoveis.dat", "w+b");

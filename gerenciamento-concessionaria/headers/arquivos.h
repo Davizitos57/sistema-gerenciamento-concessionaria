@@ -2,6 +2,10 @@
 #define ARQUIVOS_H
 
 #include "assinaturas_gerais.h"
+#include "assinaturas_clientes.h"
+#include "assinaturas_funcionarios.h"
+#include "assinaturas_automoveis.h"
+
 
 bool arquivos_vazios(FILE* automoveis, FILE* clientes, FILE* funcionarios);
 void abre_arquivos(FILE** automoveis, FILE** clientes, FILE** funcionarios);
