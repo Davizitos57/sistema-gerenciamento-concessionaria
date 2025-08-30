@@ -1,7 +1,7 @@
 #ifndef BUSCABINARIA_C
 #define BUSCABINARIA_C
 
-#include "..\headers\busca_binaria.h"
+#include "..\cabecalho\busca_binaria.h"
 #include "..\arquivos.c"
 #include "..\entidades\automoveis.c"
 #include "..\entidades\clientes.c"

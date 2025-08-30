@@ -1,7 +1,7 @@
 #ifndef AUTOMOVEIS_C
 #define AUTOMOVEIS_C
 
-#include "..\headers\assinaturas_automoveis.h"
+#include "..\cabecalho\assinaturas_automoveis.h"
 
 int tamanho_automovel(){
     return ((sizeof(char) * 50) + (sizeof(char) * 20) + (sizeof(char) * 20) + (sizeof(int)) + (sizeof(double)) + 

@@ -1,7 +1,7 @@
 #ifndef SELECAONATURAL_C
 #define SELECAONATURAL_C
 
-#include "..\headers\selecao_natural.h"
+#include "..\cabecalho\selecao_natural.h"
 #include "..\arquivos.c"
 #include "..\entidades\automoveis.c"
 #include "..\entidades\clientes.c"
@@ -16,13 +16,13 @@ int SelecaoNaturalAutomoveis(FILE *Arquivo, int TAMPART, FILE *ArquivoLOGSN){
     TEMP_INICIAL = clock(); 
 
     int contador = 0;
-    int reg = 0;
+    int reg = 0; 
     int TamArq = tamanho_arquivo_automovel(Arquivo); 
     int NP = 0; 
     TCarros *registro[TAMPART]; 
     char nomeParticao[30];
 
-    TCarros *anterior = NULL;
+    TCarros *anterior = NULL; 
 
     rewind(Arquivo);
 
@@ -122,13 +122,14 @@ int SelecaoNaturalCliente(FILE *Arquivo, int TAMPART, FILE *ArquivoLOGSN){
     TEMP_INICIAL = clock();
 
     int contador = 0;
-    int reg = 0;
-    int TamArq = tamanho_arquivo_clientes(Arquivo); 
+    int reg = 0; 
+    int TamArq = tamanho_arquivo_clientes(Arquivo);
     int NP = 0; 
     TCliente *registro[TAMPART]; 
     char nomeParticao[30];
 
     TCliente *anterior = NULL; 
+
     rewind(Arquivo);
 
     FILE *Reservatorio;
@@ -144,7 +145,6 @@ int SelecaoNaturalCliente(FILE *Arquivo, int TAMPART, FILE *ArquivoLOGSN){
             reg++;
         }
     }
-
     do {
         sprintf(nomeParticao, "ParticaoCliente%d.dat", NP + 1);
 
@@ -182,10 +182,12 @@ int SelecaoNaturalCliente(FILE *Arquivo, int TAMPART, FILE *ArquivoLOGSN){
             if (Proximoverificado == NULL) {
                 registro[posicaoMenor] = NULL;    
             } 
+
             else if (Proximoverificado->codigo < anterior->codigo) {
                 salvarCliente(Proximoverificado, Reservatorio);
                 registro[posicaoMenor] = NULL;
             } 
+
             else {
                 registro[posicaoMenor] = Proximoverificado;
                 reg++;
@@ -245,14 +247,12 @@ int SelecaoNaturalFuncionario(FILE *Arquivo, int TAMPART, FILE *ArquivoLOGSN){
     }
 
     printf("\nGerando particoes...\n\n");
-
     for (int i = 0; i < TAMPART; i++) {
         registro[i] = leitura_arquivo_funcionario(Arquivo);
         if (registro[i] == NULL) {
             reg++;
         }
     }
-
     do {
         sprintf(nomeParticao, "ParticaoFuncionario%d.dat", NP + 1);
 
@@ -261,7 +261,7 @@ int SelecaoNaturalFuncionario(FILE *Arquivo, int TAMPART, FILE *ArquivoLOGSN){
         FILE *Particao;
         if ((Particao = fopen(nomeParticao, "w+b")) == NULL) {
             printf("Erro ao criar arquivo de saída");
-            return -1; //Retorna -1 nesse caso porque a funcao é INT 
+            return -1; 
         }
 
         while (tamanho_arquivo_funcionarios(Reservatorio) < TAMPART && reg < TamArq) {
@@ -290,12 +290,10 @@ int SelecaoNaturalFuncionario(FILE *Arquivo, int TAMPART, FILE *ArquivoLOGSN){
             if (Proximoverificado == NULL) {
                 registro[posicaoMenor] = NULL;
             } 
-
             else if (Proximoverificado->codigo < anterior->codigo) {
                 salvarFuncionario(Proximoverificado, Reservatorio);
                 registro[posicaoMenor] = NULL;
             } 
-
             else {
                 registro[posicaoMenor] = Proximoverificado;
                 reg++;

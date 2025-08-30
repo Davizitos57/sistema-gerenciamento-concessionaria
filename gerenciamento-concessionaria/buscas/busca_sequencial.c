@@ -1,7 +1,7 @@
 #ifndef BUSCASEQUENCIAL_C
 #define BUSCASEQUENCIAL_C
 
-#include "..\headers\busca_sequencial.h"
+#include "..\cabecalho\busca_sequencial.h"
 #include "..\arquivos.c"
 #include "..\entidades\automoveis.c"
 #include "..\entidades\clientes.c"

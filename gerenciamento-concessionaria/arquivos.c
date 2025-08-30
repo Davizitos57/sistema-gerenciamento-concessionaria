@@ -1,7 +1,7 @@
 #ifndef ARQUIVOS_C
 #define ARQUIVOS_C
 
-#include "headers\arquivos.h"
+#include "cabecalho\arquivos.h"
 #include "entidades\automoveis.c"
 #include "entidades\clientes.c"
 #include "entidades\funcionarios.c"

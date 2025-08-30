@@ -1,7 +1,7 @@
 #ifndef INTERCALACAOOTIMA_C
 #define INTERCALACAOOTIMA_C
 
-#include "..\headers\intercalacao_otima.h"
+#include "..\cabecalho\intercalacao_otima.h"
 #include "..\arquivos.c"
 #include "..\entidades\automoveis.c"
 #include "..\entidades\clientes.c"
@@ -19,7 +19,7 @@ void IntercalacaoOtimaAutomovel(int NP, char *ArquivoFinalOrdenado, FILE *Arquiv
     TEMP_INICIAL = clock();
 
     FILE **particoes = (FILE **)malloc(NP * sizeof(FILE*)); 
-    TCarros ** registros = (TCarros **)malloc(NP * sizeof(TCarros*));
+    TCarros ** registros = (TCarros **)malloc(NP * sizeof(TCarros*)); 
 
     for(int i = 0; i<NP; i++){
         char nomeParticao[30];
@@ -39,7 +39,7 @@ void IntercalacaoOtimaAutomovel(int NP, char *ArquivoFinalOrdenado, FILE *Arquiv
     }
 
     while(NP>0){
-        int NPIntercaladas = (NP<F) ? NP : F;
+        int NPIntercaladas = (NP<F) ? NP : F; 
 
         TCarros **RegistrosIntercalados = (TCarros **)malloc(NPIntercaladas * sizeof(TCarros*));
         FILE **ParticoesIntercaladas = (FILE **)malloc(NPIntercaladas * sizeof(FILE*));
@@ -49,11 +49,12 @@ void IntercalacaoOtimaAutomovel(int NP, char *ArquivoFinalOrdenado, FILE *Arquiv
             RegistrosIntercalados[i] = registros[i];
         }
         while(true){
-            int menor = -1;
+            int menor = -1; 
             int menorcodigo = INT_MAX; 
 
             for(int j = 0; j<NPIntercaladas; j++){
                 contador++;
+
                 if(RegistrosIntercalados[j] != NULL && RegistrosIntercalados[j]->codigo < menorcodigo){
                     menorcodigo = RegistrosIntercalados[j]->codigo;
                     menor = j;
@@ -155,6 +156,7 @@ void IntercalacaoOtimaCliente(int NP, char *ArquivoFinalOrdenado, FILE *ArquivoL
 
     FILE **particoes = (FILE **)malloc(NP * sizeof(FILE*)); 
     TCliente ** registros = (TCliente **)malloc(NP * sizeof(TCliente*)); 
+
     for(int i = 0; i<NP; i++){
         char nomeParticao[30];
         sprintf(nomeParticao, "ParticaoCliente%d.dat", i+1);
@@ -182,13 +184,13 @@ void IntercalacaoOtimaCliente(int NP, char *ArquivoFinalOrdenado, FILE *ArquivoL
             ParticoesIntercaladas[i] = particoes[i];
             RegistrosIntercalados[i] = registros[i];
         }
-
         while(true){
             int menor = -1; 
             int menorcodigo = INT_MAX; 
 
             for(int j = 0; j<NPIntercaladas; j++){
                 contador++;
+
                 if(RegistrosIntercalados[j] != NULL && RegistrosIntercalados[j]->codigo < menorcodigo){
                     menorcodigo = RegistrosIntercalados[j]->codigo;
                     menor = j;
@@ -309,7 +311,7 @@ void IntercalacaoOtimaFuncionario(int NP, char *ArquivoFinalOrdenado, FILE *Arqu
     }
 
     while(NP>0){
-        int NPIntercaladas = (NP<F) ? NP : F; //Define se serao intercaladas o numero F de particoes ou em caso de nao houver o suficiente de F, o numero restante de NP
+        int NPIntercaladas = (NP<F) ? NP : F; 
 
         TFuncionario **RegistrosIntercalados = (TFuncionario **)malloc(NPIntercaladas * sizeof(TFuncionario*));
         FILE **ParticoesIntercaladas = (FILE **)malloc(NPIntercaladas * sizeof(FILE*));
@@ -320,9 +322,11 @@ void IntercalacaoOtimaFuncionario(int NP, char *ArquivoFinalOrdenado, FILE *Arqu
         }
         while(true){
             int menor = -1; 
-            int menorcodigo = INT_MAX; 
+            int menorcodigo = INT_MAX;
+
             for(int j = 0; j<NPIntercaladas; j++){
                 contador++;
+
                 if(RegistrosIntercalados[j] != NULL && RegistrosIntercalados[j]->codigo < menorcodigo){
                     menorcodigo = RegistrosIntercalados[j]->codigo;
                     menor = j;

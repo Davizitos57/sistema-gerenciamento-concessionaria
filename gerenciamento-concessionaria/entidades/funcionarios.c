@@ -1,7 +1,7 @@
 #ifndef FUNCIONARIOS_C
 #define FUNCIONARIOS_C
 
-#include "..\headers\assinaturas_funcionarios.h"
+#include "..\cabecalho\assinaturas_funcionarios.h"
 
 int tamanho_funcionario(){
     

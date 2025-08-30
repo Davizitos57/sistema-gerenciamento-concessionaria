@@ -1,7 +1,7 @@
 #ifndef ENGINE_C
 #define ENGINE_C
 
-#include "headers\engine.h"
+#include "cabecalho\engine.h"
 #include "entidades\automoveis.c"
 #include "entidades\clientes.c"
 #include "entidades\funcionarios.c"
@@ -120,11 +120,11 @@ void Switch_Automoveis(FILE* carros, FILE *ArquivoLOG){
                         scanf("%d", &alterar);
                         
                         if(alterar == 1){
-                            criaAutomoveisManual(c, NULL); //Cria ou Edita os automoveis manualmente
+                            criaAutomoveisManual(c, NULL);
                         }
                         else if(alterar == 2){
                             printf("\nDigite o nome do automovel: ");
-                            while(getchar() != '\n'); // Limpa buffer de entrada
+                            while(getchar() != '\n'); 
                             fgets(c->nome, sizeof(c->nome), stdin);
                             c->nome[strcspn(c->nome, "\n")] = '\0';
 
@@ -503,9 +503,7 @@ void Switch_Funcionarios(FILE* func, FILE *ArquivoLOG){
                 printf("Numero de particoes criadas: %d\n", NPcriadas+1);
 
                 printf("\nComecando a parte da intercalacao otima...\n");
-
                 IntercalacaoOtimaFuncionario(NPcriadas,"Funcionarios.dat", ArquivoLOG);
-
                 printf("\nClassificacao Externa Finalizada\n");
             break;
 

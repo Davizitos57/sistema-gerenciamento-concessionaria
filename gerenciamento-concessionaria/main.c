@@ -1,7 +1,7 @@
-#include "headers\assinaturas_gerais.h"
-#include "headers\arquivos.h"
-#include "headers\engine.h"
-#include "headers\menu.h"
+#include "cabecalho\assinaturas_gerais.h"
+#include "cabecalho\arquivos.h"
+#include "cabecalho\engine.h"
+#include "cabecalho\menu.h"
 #include "engine.c"
 #include "arquivos.c"
 #include "menu.c"
@@ -12,7 +12,7 @@ int main(){
 
     abre_arquivos(&automoveis, &clientes, &funcionarios);
 
-    int tamanho = 1000;
+    int tamanho = 100000;
     int escolhainicial = 0; 
     if(arquivos_vazios(automoveis, clientes, funcionarios)){
         do {

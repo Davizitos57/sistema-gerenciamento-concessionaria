@@ -1,7 +1,7 @@
 #ifndef SELECTIONSORT_C
 #define SELECTIONSORT_C
 
-#include "..\headers\selection_sort.h"
+#include "..\cabecalho\selection_sort.h"
 #include "..\arquivos.c"
 #include "..\entidades\automoveis.c"
 #include "..\entidades\clientes.c"
