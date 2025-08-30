@@ -17,6 +17,7 @@ typedef struct Carros{
     TCliente cliente;
 
     int situacao;
+    bool ocupado;
     
 } TCarros;
 

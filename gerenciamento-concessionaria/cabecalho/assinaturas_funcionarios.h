@@ -11,6 +11,8 @@ typedef struct {
     ENDERECO endereco;
     int codigo;
     double salario;
+
+    bool ocupado;
     
 } TFuncionario;
 

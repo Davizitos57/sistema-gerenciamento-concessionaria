@@ -7,5 +7,6 @@ int Menu_Principal();
 int Menu_Automoveis();
 int Menu_Cliente();
 int Menu_Funcionarios();
+int Menu_TabelaHash();
 
 #endif

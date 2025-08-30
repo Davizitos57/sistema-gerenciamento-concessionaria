@@ -10,6 +10,8 @@ typedef struct {
     TELEFONE telefone;
     ENDERECO endereco;
     int codigo;
+
+    bool ocupado;
     
 } TCliente;
 

@@ -49,6 +49,10 @@ TCarros *criaAutomoveisManual(TCarros *carro, FILE *out){
 
     strcpy(carro->funcionario.nome, " - ");
     strcpy(carro->cliente.nome, " - ");
+    carro->funcionario.codigo = 0;
+    carro->cliente.codigo = 0;
+    carro->situacao = DISPONIVEL;
+    carro->ocupado = true;
 
     while(getchar() != '\n'); 
 
@@ -64,22 +68,28 @@ TCarros *criaAutomoveisManual(TCarros *carro, FILE *out){
     fgets(carro->modelo_veiculo, sizeof(carro->modelo_veiculo), stdin);
     carro->modelo_veiculo[strcspn(carro->modelo_veiculo, "\n")] = '\0';
 
-    printf("\nDigite o codigo do automovel: ");
-    scanf("%d", &carro->codigo);
-    getchar(); 
-
     printf("\nDigite o preco do automovel: ");
     scanf("%lf", &carro->preco);
-    getchar(); 
+    getchar();
 
-    carro->funcionario.codigo = 0;
-    carro->cliente.codigo = 0;
-    carro->situacao = DISPONIVEL;
+    rewind(out);
+    TCarros *existeCarro = NULL;
 
-    if(out != NULL){
-        fseek(out, 0, SEEK_END);
-        salvarAutomoveis(carro, out);
+    while((existeCarro = leitura_arquivo_carros(out)) != NULL){
+        if(!existeCarro->ocupado){
+            carro->codigo = existeCarro->codigo;
+            fseek(out, -sizeof(TCarros), SEEK_CUR);
+            salvarAutomoveis(carro, out);
+            free(existeCarro);
+            return carro;
+        }
+        free(existeCarro);
     }
+
+    fseek(out, 0, SEEK_END);
+    carro->codigo = tamanho_arquivo_automovel(out)+1;
+    salvarAutomoveis(carro, out);
+
     return carro;
 
 }
@@ -100,6 +110,7 @@ TCarros *criaAutomoveis(char *nome, char *marca, char *modelo, int codigo, doubl
     carro -> preco = preco;
     memset(&carro->funcionario, 0, sizeof(TFuncionario));
     memset(&carro->cliente, 0, sizeof(TCliente));
+    carro->ocupado = true;
     carro -> situacao = DISPONIVEL;
 
     return carro;

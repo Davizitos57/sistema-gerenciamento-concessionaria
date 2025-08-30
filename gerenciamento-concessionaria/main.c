@@ -10,9 +10,14 @@ int main(){
     FILE *automoveis = NULL, *clientes = NULL, *funcionarios = NULL;
     FILE *ArquivoLOG = NULL;
 
-    abre_arquivos(&automoveis, &clientes, &funcionarios);
+    FILE *tabelaHashAuto = NULL, *listaEncadeadaAuto= NULL;
+    FILE *tabelaHashCliente = NULL, *listaEncadeadaCliente = NULL;
+    FILE *tabelaHashFunc = NULL, *listaEncadeadaFunc = NULL;
 
-    int tamanho = 100000;
+    abre_arquivos(&automoveis, &clientes, &funcionarios);
+    abre_arquivos_hash(&tabelaHashAuto, &listaEncadeadaAuto, &tabelaHashCliente, &listaEncadeadaCliente, &tabelaHashFunc, &listaEncadeadaFunc);
+
+    int tamanho = 200;
     int escolhainicial = 0; 
     if(arquivos_vazios(automoveis, clientes, funcionarios)){
         do {

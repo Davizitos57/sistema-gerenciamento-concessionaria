@@ -38,6 +38,8 @@ TCliente *criaClienteManual (TCliente *cliente, FILE *out){
         }
     }
 
+    cliente->ocupado = true;
+
     while(getchar() != '\n');
 
     printf("\nDigite o nome do cliente: ");
@@ -62,10 +64,24 @@ TCliente *criaClienteManual (TCliente *cliente, FILE *out){
     scanf("%d", &cliente->codigo);
     getchar(); 
 
-    if(out != NULL){
-        fseek(out, 0, SEEK_END);
-        salvarCliente(cliente, out);
+    rewind(out);
+    TCliente *existeCliente = NULL;
+
+    while((existeCliente = leitura_arquivo_cliente(out)) != NULL){
+        if(!existeCliente->ocupado){
+            cliente->codigo = existeCliente->codigo;
+            fseek(out, -sizeof(TCliente), SEEK_CUR);
+            salvarCliente(cliente, out);
+            free(existeCliente);
+            return cliente;
+        }
+        free(existeCliente);
     }
+
+    fseek(out, 0, SEEK_END);
+    cliente->codigo = tamanho_arquivo_clientes(out)+1;
+    salvarCliente(cliente, out);
+    
     return cliente;
 
 }
@@ -83,6 +99,7 @@ TCliente *criaCliente(char *nome, char *cpf, char *telefone, char *endereco, int
     strcpy(c->telefone, telefone);
     strcpy(c->endereco, endereco);
     c->codigo = codigo;
+    c->ocupado = true;
 
     return c;
 }

@@ -25,6 +25,37 @@ void abre_arquivos(FILE **automoveis, FILE **clientes, FILE **funcionarios){
     }
 }
 
+void abre_arquivos_hash(FILE **tabelaHashAuto, FILE **listaEncadeadaAuto, FILE **tabelaHashCliente, FILE **listaEncadeadaCliente, FILE **tabelaHashFunc, FILE **listaEncadeadaFunc){
+    *tabelaHashAuto = fopen("TabelaHashAuto.dat", "w+b");
+    fclose(*tabelaHashAuto);
+    *tabelaHashAuto = fopen("TabelaHashAuto.dat", "r+b");
+
+    *listaEncadeadaAuto = fopen("ListaEncadeadaAuto.dat", "w+b");
+    fclose(*listaEncadeadaAuto);
+    *listaEncadeadaAuto = fopen("ListaEncadeadaAuto.dat", "r+b");
+
+    *tabelaHashCliente = fopen("tabelaHashCliente.dat", "w+b");
+    fclose(*tabelaHashCliente);
+    *tabelaHashCliente = fopen("tabelaHashCliente.dat", "r+b");
+
+    *listaEncadeadaCliente = fopen("listaEncadeadaCliente.dat", "w+b");
+    fclose(*listaEncadeadaCliente);
+    *listaEncadeadaCliente = fopen("listaEncadeadaCliente.dat", "r+b");
+
+    *tabelaHashFunc = fopen("tabelaHashFunc.dat", "w+b");
+    fclose(*tabelaHashFunc);
+    *tabelaHashFunc = fopen("tabelaHashFunc.dat", "r+b");
+
+    *listaEncadeadaFunc = fopen("listaEncadeadaFunc.dat", "w+b");
+    fclose(*listaEncadeadaFunc);
+    *listaEncadeadaFunc = fopen("listaEncadeadaFunc.dat", "r+b");
+    
+    if(*tabelaHashAuto == NULL || *listaEncadeadaAuto == NULL || *tabelaHashCliente == NULL || * listaEncadeadaCliente == NULL || *tabelaHashFunc == NULL || *listaEncadeadaFunc == NULL ){
+        printf("Erro ao abrir um dos arquivos!\n");
+        exit(1);
+    }
+}
+
 bool arquivos_vazios(FILE *automoveis, FILE *clientes, FILE *funcionarios){
     fseek(automoveis, 0, SEEK_END);
     fseek(clientes, 0, SEEK_END);

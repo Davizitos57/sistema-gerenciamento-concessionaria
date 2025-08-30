@@ -2,6 +2,4 @@
 .vscode/
 
 #ignorando output
-/output/*.exe
-/output/*.dat
-/output/*.txt
+/output/

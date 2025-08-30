@@ -4,11 +4,13 @@
 #include "cabecalho\menu.h"
 
 int Menu_Principal(){
+    
     int escolha = 0;
 
     printf("                   Sistema de Gerenciamento de uma Concessionaria               \n");
     printf("------------------------------------------------------------------------------------------------------\n");
-    printf("\n[1] Servicos Automoveis.\n[2] Servicos Clientes.\n[3] Servicos Funcionarios.\n[4] Sair da Concessionaria.\n\n");
+    printf("\n[1] Servicos Automoveis.\n[2] Servicos Clientes.\n[3] Servicos Funcionarios.\n");
+    printf("[4] Tabelas Hash.\n[5] Sair da Concessionaria.\n\n");
     
     printf("Escolha: ");
     scanf("%d", &escolha);
@@ -17,6 +19,7 @@ int Menu_Principal(){
 }
 
 int Menu_Automoveis(){
+
     int escolha = 0;
 
     printf("--------------------------------------------------------------------------------\n");
@@ -33,7 +36,26 @@ int Menu_Automoveis(){
     return escolha;
 }
 
+int Menu_Cliente(){
+    
+    int escolha = 0;
+    
+    printf("--------------------------------------------------------------------------------\n");
+    printf("               Seja Bem-vindo(a) a area destinada a Clientes                    \n");
+    printf("--------------------------------------------------------------------------------\n");
+
+    printf("\n[1] Alugar um Automovel.\n[2] Comprar um Automovel.\n[3] Buscar um Automovel.\n[4] Devolver Automovel alugado.");
+    printf("\n[5] Imprimir Base de Dados Completa.\n[6] Ordenar Base de Dados com Selection Sort.\n");
+    printf("[7] Classificacao Externa (Selecao Natural e Intercalacao Otima).\n[8] Sair da area destinada a Clientes.\n\n");
+
+    printf("Escolha: ");
+    scanf("%d", &escolha);
+
+    return escolha;
+}
+
 int Menu_Funcionarios(){
+    
     int escolha = 0;
 
     printf("--------------------------------------------------------------------------------\n");
@@ -51,21 +73,21 @@ int Menu_Funcionarios(){
 
 }
 
-int Menu_Cliente(){
-    int escolha = 0;
+int Menu_TabelaHash(){
     
+    int escolha = 0;
+
     printf("--------------------------------------------------------------------------------\n");
-    printf("               Seja Bem-vindo(a) a area destinada a Clientes                    \n");
+    printf("               Seja Bem-vindo(a) a area destinada as Tabelas Hash               \n");
     printf("--------------------------------------------------------------------------------\n");
 
-    printf("\n[1] Alugar um Automovel.\n[2] Comprar um Automovel.\n[3] Buscar um Automovel.\n[4] Devolver Automovel alugado.");
-    printf("\n[5] Imprimir Base de Dados Completa.\n[6] Ordenar Base de Dados com Selection Sort.\n");
-    printf("[7] Classificacao Externa (Selecao Natural e Intercalacao Otima).\n[8] Sair da area destinada a Clientes.\n\n");
-
+    printf("\nObservacao essas Tabelas Hashs contam com a tecnica de Encadeamento Externo, alem tambem de utilizar a Hashing por Divisao (Metodo da Divisao).\n(Codigo eh divido por TamanhoHash e o resto define o compartimento do registro).\n");
+    printf("\n[1] Tabela Hash Automoveis.\n[2] Tabela Hash Clientes.\n[3] Tabela Hash Funcionarios.\n[4] Sair da area destinada as Tabelas Hash.\n\n");
+    
     printf("Escolha: ");
     scanf("%d", &escolha);
 
     return escolha;
-
 }
+
 #endif

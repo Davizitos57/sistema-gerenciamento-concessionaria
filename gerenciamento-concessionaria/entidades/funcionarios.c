@@ -31,8 +31,6 @@ void salvarFuncionario(TFuncionario *func, FILE *out){
 
 TFuncionario *criaFuncionariosManual(TFuncionario *func, FILE *out){
 
-    system("cls");
-
     if(func == NULL){
         func = (TFuncionario *)malloc(sizeof(TFuncionario)); 
         if(func == NULL){
@@ -40,6 +38,8 @@ TFuncionario *criaFuncionariosManual(TFuncionario *func, FILE *out){
             exit(1);
         }
     }
+
+    func->ocupado = true;
     
     while(getchar() != '\n'); 
 
@@ -69,10 +69,23 @@ TFuncionario *criaFuncionariosManual(TFuncionario *func, FILE *out){
     scanf("%lf", &func->salario);
     getchar(); 
 
-    if(out != NULL){
-        fseek(out, 0, SEEK_END);
-        salvarFuncionario(func, out);
+    rewind(out);
+    TFuncionario *existeFunc = NULL;
+
+    while((existeFunc = leitura_arquivo_funcionario(out)) != NULL){
+        if(!existeFunc->ocupado){
+            func->codigo = existeFunc->codigo;
+            fseek(out, -sizeof(TFuncionario), SEEK_CUR);
+            salvarFuncionario(func, out);
+            free(existeFunc);
+            return func;
+        }
+        free(existeFunc);
     }
+
+    fseek(out, 0, SEEK_END);
+    func->codigo = tamanho_arquivo_funcionarios(out)+1;
+    salvarFuncionario(func, out);
     
     return func;
 
@@ -97,6 +110,8 @@ TFuncionario *criaFuncionarios(char *nome, char *cpf, char *telefone, char *ende
 
     func -> codigo = codigo;
     func -> salario = salario;
+
+    func -> ocupado = true;
 
     return func;
 }

@@ -10,11 +10,24 @@
 #include "ordenacao\selection_sort.c"
 #include "ordenacao\selecao_natural.c"
 #include "ordenacao\intercalacao_otima.c"
+#include "tabelas_hashs\tabela_hash_geral.c"
+#include "tabelas_hashs\tabela_hash_automoveis.c"
+#include "tabelas_hashs\tabela_hash_clientes.c"
+#include "tabelas_hashs\tabela_hash_funcionarios.c"
 #include "menu.c"
 
 void seletor(FILE* automoveis, FILE* clientes, FILE* funcionarios, FILE *ArquivoLOG){
 
     bool end = true;
+
+    FILE *tabelaHashAuto = fopen("TabelaHashAuto.dat", "r+b");
+    FILE *listaEncadeadaAuto = fopen("ListaEncadeadaAuto.dat", "r+b");
+
+    FILE *tabelaHashCliente = fopen("TabelaHashCliente.dat", "r+b");
+    FILE *listaEncadeadaCliente = fopen("ListaEncadeadaCliente.dat", "r+b");
+        
+    FILE *tabelaHashFunc = fopen("TabelaHashFunc.dat", "r+b");
+    FILE *listaEncadeadaFunc = fopen("ListaEncadeadaFunc.dat", "r+b");
 
     do{
 
@@ -33,6 +46,10 @@ void seletor(FILE* automoveis, FILE* clientes, FILE* funcionarios, FILE *Arquivo
             break;
 
             case 4:
+                Switch_TabelaHash(tabelaHashAuto, tabelaHashCliente, tabelaHashFunc, listaEncadeadaAuto, listaEncadeadaCliente, listaEncadeadaFunc);
+            break;
+
+            case 5:
                 system("cls");
                 printf("Encerrando programa...");
                 end = false;
@@ -147,7 +164,7 @@ void Switch_Automoveis(FILE* carros, FILE *ArquivoLOG){
                     else{
                         criaAutomoveisManual(c, NULL);
                     }
-                    fseek(carros, posicao * sizeof(TCarros), SEEK_SET);
+                    fseek(carros, posicao * sizeof(TCarros), SEEK_SET); 
                     salvarAutomoveis(c, carros); 
 
                     imprimirCarro(c);
@@ -524,5 +541,263 @@ void Switch_Funcionarios(FILE* func, FILE *ArquivoLOG){
     
     fclose(clientes);
 
+}
+
+void Switch_TabelaHash(FILE *tabelaHashAuto, FILE *tabelaHashCliente, FILE *tabelaHashFunc, FILE *listaEncadeadaAuto, FILE *listaEncadeadaCliente, FILE *listaEncadeadaFunc){
+
+    system("cls");
+
+    bool end = true;
+    bool end2 = true;
+    int escolha = 0;
+    int acharHash = 0;
+
+    FILE *carros = fopen("Automoveis.dat", "r+b");
+    FILE *clientes = fopen("Clientes.dat", "r+b");
+    FILE *funcionarios = fopen("Funcionarios.dat", "r+b");
+
+    if(carros == NULL){
+        printf("Erro ao abrir o arquivo Automoveis.dat\n");
+        return;
+    }
+
+    if(clientes == NULL){
+        printf("Erro ao abrir o arquivo Clientes.dat\n");
+        return;
+    }
+
+    if(funcionarios == NULL){
+        printf("Erro ao abrir o arquivo Funcionarios.dat\n");
+        return;
+    }
+
+    inicializaTabelaHashFuncionarios(tabelaHashFunc, listaEncadeadaFunc, funcionarios);
+    inicializaTabelaHashCliente(tabelaHashCliente, listaEncadeadaCliente, clientes);
+    inicializaTabelaHashAutomoveis(tabelaHashAuto, listaEncadeadaAuto, carros);
+
+    do{
+        switch(Menu_TabelaHash()){
+
+            case 1:
+                system("cls");
+                
+                while(end2){
+
+                    printf("--------------------------------------------------------------------------------\n");
+                    printf("          Seja Bem-vindo(a) a area destinada a Tabela Hash Automoveis           \n");
+                    printf("--------------------------------------------------------------------------------\n\n");
+            
+
+                    printf("[1] Adicionar Automovel na Tabela Hash.\n[2] Buscar Automovel na Tabela Hash.\n[3] Deletar Automovel na Tabela Hash.\n");
+                    printf("[4] Imprime a Tabela Hash de Automoveis.\n[5] Sair da area destinada a Tabela Hash Automoveis.\n\n");
+
+                    printf("Sua escolha: ");
+                    scanf("%d", &escolha);
+
+                    if(escolha == 1){
+                        TCarros *carroNovo = criaAutomoveisManual(NULL, carros);
+                        inserirAutomovelHash(tabelaHashAuto, listaEncadeadaAuto, carroNovo);
+                        system("cls");
+                        printf("Carro adicionado!\n\n");
+                    }
+                    else if(escolha == 2){
+                        printf("\nDigite o codigo do Automovel que desejas buscar.\n");
+                        printf("Escolha: ");
+                        scanf("%d", &acharHash);
+
+                        TCarros *carroAchado = buscaAutomovelHash(tabelaHashAuto, listaEncadeadaAuto, acharHash);
+                        if(carroAchado!=NULL){
+                            int hashlocalizacao = FuncaoHash(acharHash);
+                            system("cls");
+                            printf("Automovel achado na Tabela Hash:\n");
+                            imprimirCarro(carroAchado);
+                            printf("Esse Automovel se encontra no Compartimento [%d].\n\n", hashlocalizacao);
+                            free(carroAchado);
+                        }
+                        else{
+                            system("cls");
+                            printf("Automovel nao foi achado na Tabela Hash.\n\n");
+                        }
+                    }
+                    else if(escolha == 3){
+                        printf("\nDigite o codigo do Automovel que desejas deletar.\n");
+                        printf("Escolha: ");
+                        scanf("%d", &acharHash);
+
+                        if(deletarAutomovelHash(tabelaHashAuto, listaEncadeadaAuto, carros, acharHash)){
+                            system("cls");
+                            printf("Automovel com codigo %d foi removido com sucesso.\n\n", acharHash);
+                        }
+                        else{
+                            system("cls");
+                            printf("Automovel com codigo %d nao foi encontrado na Tabela Hash.\n\n", acharHash);
+                        }
+                    }
+                    else if(escolha == 4){
+                        imprimirTabelaHash(tabelaHashAuto, listaEncadeadaAuto);
+                    }
+                    else if(escolha == 5){
+                        system("cls");
+                        printf("Saindo da area destinada a Tabela Hash Automoveis...\n");
+                        end2 = false;
+                    }
+                    else{
+                        printf("\nOpcao invalida, tente novamente\n");   
+                    }
+                }
+
+            break;
+
+            case 2:
+                system("cls");
+                
+                while(end2){
+
+                    printf("--------------------------------------------------------------------------------\n");
+                    printf("          Seja Bem-vindo(a) a area destinada a Tabela Hash Clientes             \n");
+                    printf("--------------------------------------------------------------------------------\n\n");
+            
+
+                    printf("[1] Adicionar Clientes na Tabela Hash.\n[2] Buscar Clientes na Tabela Hash.\n[3] Deletar Clientes na Tabela Hash.\n");
+                    printf("[4] Imprime a Tabela Hash de Clientes.\n[5] Sair da area destinada a Tabela Hash Clientes.\n\n");
+
+                    printf("Sua escolha: ");
+                    scanf("%d", &escolha);
+
+                    if(escolha == 1){
+                        TCliente *clienteNovo = criaClienteManual(NULL, clientes);
+                        inserirClienteHash(tabelaHashCliente, listaEncadeadaCliente, clienteNovo);
+                        system("cls");
+                        printf("Cliente adicionado!\n\n");
+                    }
+                    else if(escolha == 2){
+                        printf("\nDigite o codigo do Cliente que desejas buscar.\n");
+                        printf("Escolha: ");
+                        scanf("%d", &acharHash);
+
+                        TCliente *clienteAchado = buscaClienteHash(tabelaHashCliente, listaEncadeadaCliente, acharHash);
+                        if(clienteAchado!=NULL){
+                            int hashlocalizacao = FuncaoHash(acharHash);
+                            system("cls");
+                            printf("Automovel achado na Tabela Hash:\n");
+                            imprimecliente(clienteAchado);
+                            printf("Esse Automovel se encontra no Compartimento [%d].\n\n", hashlocalizacao);
+                            free(clienteAchado);
+                        }
+                        else{
+                            system("cls");
+                            printf("Automovel nao foi achado na Tabela Hash.\n\n");
+                        }
+                    }
+                    else if(escolha == 3){
+                        printf("\nDigite o codigo do Cliente que desejas deletar.\n");
+                        printf("Escolha: ");
+                        scanf("%d", &acharHash);
+
+                        if(deletarClienteHash(tabelaHashCliente, listaEncadeadaCliente, clientes, acharHash)){
+                            system("cls");
+                            printf("Cliente com codigo %d foi removido com sucesso.\n\n", acharHash);
+                        }
+                        else{
+                            system("cls");
+                            printf("Cliente com codigo %d nao foi encontrado na Tabela Hash.\n\n", acharHash);
+                        }
+                    }
+                    else if(escolha == 4){
+                        imprimirTabelaHashCliente(tabelaHashCliente, listaEncadeadaCliente);
+                    }
+                    else if(escolha == 5){
+                        system("cls");
+                        printf("Saindo da area destinada a Tabela Hash Cliente...\n");
+                        end2 = false;
+                    }
+                    else{
+                        printf("\nOpcao invalida, tente novamente\n");   
+                    }
+                }
+            break;
+
+            case 3:
+                system("cls");
+
+                while(end2){
+
+                    printf("--------------------------------------------------------------------------------\n");
+                    printf("          Seja Bem-vindo(a) a area destinada a Tabela Hash Funcionarios          \n");
+                    printf("--------------------------------------------------------------------------------\n\n");
+            
+
+                    printf("[1] Adicionar Funcionario na Tabela Hash.\n[2] Buscar Funcionario na Tabela Hash.\n[3] Deletar Funcionario na Tabela Hash.\n");
+                    printf("[4] Imprime a Tabela Hash de Funcionario.\n[5] Sair da area destinada a Tabela Hash Funcionario.\n\n");
+
+                    printf("Sua escolha: ");
+                    scanf("%d", &escolha);
+
+                    if(escolha == 1){
+                        TFuncionario *funcNovo = criaFuncionariosManual(NULL, funcionarios);
+                        inserirFuncionarioHash(tabelaHashFunc, listaEncadeadaFunc, funcNovo);
+                        system("cls");
+                        printf("Funcionario adicionado!\n\n");
+                    }
+                    else if(escolha == 2){
+                        printf("\nDigite o codigo do Funcionario que desejas buscar.\n");
+                        printf("Escolha: ");
+                        scanf("%d", &acharHash);
+
+                        TFuncionario *funcAchado = buscaFuncionarioHash(tabelaHashFunc, listaEncadeadaFunc, acharHash);
+                        if(funcAchado!=NULL){
+                            int hashlocalizacao = FuncaoHash(acharHash);
+                            system("cls");
+                            printf("Funcionario achado na Tabela Hash:\n");
+                            imprimefuncionario(funcAchado);
+                            printf("Esse Funcionario se encontra no Compartimento [%d].\n\n", hashlocalizacao);
+                            free(funcAchado);
+                        }
+                        else{
+                            system("cls");
+                            printf("Funcionario nao foi achado na Tabela Hash.\n\n");
+                        }
+                    }
+                    else if(escolha == 3){
+                        printf("\nDigite o codigo do Funcionario que desejas deletar.\n");
+                        printf("Escolha: ");
+                        scanf("%d", &acharHash);
+
+                        if(deletarFuncionarioHash(tabelaHashFunc, listaEncadeadaFunc, funcionarios, acharHash)){
+                            system("cls");
+                            printf("Funcionario com codigo %d foi removido com sucesso.\n\n", acharHash);
+                        }
+                        else{
+                            system("cls");
+                            printf("Funcionario com codigo %d nao foi encontrado na Tabela Hash.\n\n", acharHash);
+                        }
+                    }
+                    else if(escolha == 4){
+                        imprimirTabelaHashFunc(tabelaHashFunc, listaEncadeadaFunc);
+                    }
+                    else if(escolha == 5){
+                        system("cls");
+                        printf("Saindo da area destinada a Tabela Hash Funcionario...\n");
+                        end2 = false;
+                    }
+                    else{
+                        printf("\nOpcao invalida, tente novamente\n");   
+                    }
+                }
+            break;
+
+            case 4:
+                system("cls");
+                printf("Saindo da area destinada a Tabela Hash...");
+                printf("\n------------------------------------------------------------------------------------------------------\n");
+                end = false;
+            break;
+
+            default:
+                printf("\nOpcao invalida, tente novamente\n");        
+            break;
+        }
+    }
+    while(end);
 }
 #endif
