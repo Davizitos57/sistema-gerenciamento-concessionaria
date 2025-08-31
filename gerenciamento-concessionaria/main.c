@@ -17,7 +17,7 @@ int main(){
     abre_arquivos(&automoveis, &clientes, &funcionarios);
     abre_arquivos_hash(&tabelaHashAuto, &listaEncadeadaAuto, &tabelaHashCliente, &listaEncadeadaCliente, &tabelaHashFunc, &listaEncadeadaFunc);
 
-    int tamanho = 200;
+    int tamanho = 1000;
     int escolhainicial = 0; 
     if(arquivos_vazios(automoveis, clientes, funcionarios)){
         do {

@@ -60,10 +60,6 @@ TCliente *criaClienteManual (TCliente *cliente, FILE *out){
     fgets(cliente->endereco, sizeof(cliente->endereco), stdin);
     cliente->endereco[strcspn(cliente->endereco, "\n")] = '\0';
 
-    printf("\nDigite o codigo do cliente: ");
-    scanf("%d", &cliente->codigo);
-    getchar(); 
-
     rewind(out);
     TCliente *existeCliente = NULL;
 

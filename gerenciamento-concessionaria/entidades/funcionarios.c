@@ -59,11 +59,7 @@ TFuncionario *criaFuncionariosManual(TFuncionario *func, FILE *out){
 
     printf("\nDigite o endereco do funcionario: ");
     fgets(func->endereco, sizeof(func->endereco), stdin);
-    func->endereco[strcspn(func->endereco, "\n")] = '\0';
-
-    printf("\nDigite o codigo do funcionario: ");
-    scanf("%d", &func->codigo);
-    getchar(); 
+    func->endereco[strcspn(func->endereco, "\n")] = '\0'; 
 
     printf("\nDigite o salario do funcionario: ");
     scanf("%lf", &func->salario);

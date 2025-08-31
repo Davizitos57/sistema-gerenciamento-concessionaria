@@ -1,5 +1,5 @@
 #ignorando VSCode settings
 .vscode/
 
-#ignorando output
-/output/
+#ignorando o output
+gerenciamento-concessionaria/output/*

@@ -581,7 +581,7 @@ void Switch_TabelaHash(FILE *tabelaHashAuto, FILE *tabelaHashCliente, FILE *tabe
             case 1:
                 system("cls");
                 
-                while(end2){
+                do{
 
                     printf("--------------------------------------------------------------------------------\n");
                     printf("          Seja Bem-vindo(a) a area destinada a Tabela Hash Automoveis           \n");
@@ -645,13 +645,14 @@ void Switch_TabelaHash(FILE *tabelaHashAuto, FILE *tabelaHashCliente, FILE *tabe
                         printf("\nOpcao invalida, tente novamente\n");   
                     }
                 }
+                while(end2);
 
             break;
 
             case 2:
                 system("cls");
                 
-                while(end2){
+                do{
 
                     printf("--------------------------------------------------------------------------------\n");
                     printf("          Seja Bem-vindo(a) a area destinada a Tabela Hash Clientes             \n");
@@ -679,14 +680,14 @@ void Switch_TabelaHash(FILE *tabelaHashAuto, FILE *tabelaHashCliente, FILE *tabe
                         if(clienteAchado!=NULL){
                             int hashlocalizacao = FuncaoHash(acharHash);
                             system("cls");
-                            printf("Automovel achado na Tabela Hash:\n");
+                            printf("Cliente achado na Tabela Hash:\n");
                             imprimecliente(clienteAchado);
-                            printf("Esse Automovel se encontra no Compartimento [%d].\n\n", hashlocalizacao);
+                            printf("Esse Cliente se encontra no Compartimento [%d].\n\n", hashlocalizacao);
                             free(clienteAchado);
                         }
                         else{
                             system("cls");
-                            printf("Automovel nao foi achado na Tabela Hash.\n\n");
+                            printf("Cliente nao foi achado na Tabela Hash.\n\n");
                         }
                     }
                     else if(escolha == 3){
@@ -715,12 +716,13 @@ void Switch_TabelaHash(FILE *tabelaHashAuto, FILE *tabelaHashCliente, FILE *tabe
                         printf("\nOpcao invalida, tente novamente\n");   
                     }
                 }
+                while(end2);
             break;
 
             case 3:
                 system("cls");
 
-                while(end2){
+                do{
 
                     printf("--------------------------------------------------------------------------------\n");
                     printf("          Seja Bem-vindo(a) a area destinada a Tabela Hash Funcionarios          \n");
@@ -784,6 +786,7 @@ void Switch_TabelaHash(FILE *tabelaHashAuto, FILE *tabelaHashCliente, FILE *tabe
                         printf("\nOpcao invalida, tente novamente\n");   
                     }
                 }
+                while(end2);
             break;
 
             case 4:

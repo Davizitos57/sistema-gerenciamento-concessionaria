@@ -3,7 +3,7 @@
 
 #include "assinaturas_gerais.h"
 
-#define TAMANHO_HASH 5
+#define TAMANHO_HASH 7
 
 int FuncaoHash(int codigo);
 void CriaTabelaHashVazia(FILE *tabelaHash);
